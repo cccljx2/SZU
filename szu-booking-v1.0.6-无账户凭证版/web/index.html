@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>深大场馆抢单助手</title>
+<link rel="icon" href="bg.jpg">
+<link rel="stylesheet" href="style.css?v=9">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <span class="logo"><img src="bg.jpg" alt=""></span>
+    <div>
+      <h1>场馆抢单助手</h1>
+      <p class="sub">深圳大学 · 体育场馆预约</p>
+    </div>
+  </div>
+  <div class="user">
+    <span id="dot" class="dot"></span>
+    <span id="userInfo">正在检查登录…</span>
+    <select id="acct" class="acct" title="切换账号"></select>
+    <button id="btnLogin" class="link">重新登录</button>
+    <button id="btnQuit" class="link quiet">退出</button>
+  </div>
+</header>
+
+<main class="grid">
+  <section class="card target">
+    <h2>预约目标</h2>
+    <div class="fields">
+      <label>校区<select id="campus"></select></label>
+      <label>项目<select id="sport"></select></label>
+      <label class="wide">场馆<select id="venue"></select></label>
+      <label>日期<select id="date"></select></label>
+      <label>时段<select id="slot"></select></label>
+    </div>
+    <div class="hintline">次日场地在<strong>前一天 12:30</strong> 放出；已放出的日期点「开始抢单」会立刻提交</div>
+
+    <div class="listhead">
+      <h2>场地优先级<span class="muted">从上往下依次尝试；已经放出来且满场的会直接跳过</span></h2>
+      <div>
+        <button id="btnLoad" class="ghost">刷新场地</button>
+        <button id="btnDefault" class="ghost">默认排序</button>
+      </div>
+    </div>
+    <div id="courts" class="courts"><div class="empty">选择时段后点「刷新场地」</div></div>
+
+    <div class="listhead">
+      <h2>抢场清单<span class="muted">一次抢多个时段，从上往下依次抢</span></h2>
+      <div>
+        <button id="btnAddItem" class="ghost">＋ 加入清单</button>
+        <button id="btnClearList" class="ghost">清空</button>
+      </div>
+    </div>
+    <div id="list" class="courts list"><div class="empty">还没加入场次。不加入时，只抢上面这一个时段</div></div>
+  </section>
+
+  <section class="card action">
+    <h2>状态</h2>
+    <p id="status" class="status">待命</p>
+    <p id="clockInfo" class="tiny"></p>
+    <div class="clock">
+      <div id="clock">--:--:--</div>
+      <div id="clockcap" class="clockcap">距离 12:30 开抢</div>
+    </div>
+    <button id="btnFire" class="primary">开 始 抢 单</button>
+    <button id="btnNow" class="secondary">立即试跑（不等 12:30）</button>
+    <button id="btnCancel" class="danger wide" hidden>取 消 等 待</button>
+    <button id="btnReset" class="ghost wide">刷 新（清空状态，可重新抢）</button>
+    <p id="usedHint" class="tiny"></p>
+    <div id="result" class="result"></div>
+    <label class="check"><input type="checkbox" id="dry" checked> 演练模式（只查不下单）</label>
+    <p class="tiny">演练模式会真的去问服务器「这个时段开了吗、还剩哪几片」，但一次下单请求都不发。
+      确认流程无误后取消勾选。</p>
+    <div class="attempts">
+      <span>首选被抢走后，最多连续尝试</span>
+      <input id="tries" type="number" min="1" max="8" step="1" value="4">
+      <span>片场地</span>
+    </div>
+    <p class="tiny">次数越多成功率越高，但连续提交过多可能被服务器判定「操作频繁」。
+      拿不准就保持 4；账号比较紧张时改成 2。</p>
+    <div class="attempts">
+      <span>清单里有多个场次时</span>
+      <select id="mode" class="mini">
+        <option value="parallel" selected>同时发起</option>
+        <option value="serial">逐个发起</option>
+      </select>
+    </div>
+    <p id="modeHint" class="tiny"></p>
+    <div class="steps">
+      <div><b>1</b> 提前打开本窗口，保持运行</div>
+      <div><b>2</b> 12:29 前点「开始抢单」，程序自动就位</div>
+      <div><b>3</b> 12:30:00 准时提交，抢到后 45 分钟内付款</div>
+    </div>
+  </section>
+</main>
+
+<section class="card logs">
+  <div class="loghead">
+    <h2>运行日志</h2>
+    <div class="credit">
+      <div>本产品由 <b>Mr.LJX</b> 独立开发</div>
+      <div>使用即视为同意保留最终解释权，Mr.LJX 不承担任何使用责任</div>
+    </div>
+  </div>
+  <pre id="log"></pre>
+</section>
+
+<script src="app.js?v=11"></script>
+</body>
+</html>

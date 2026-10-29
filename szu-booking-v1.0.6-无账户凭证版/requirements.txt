@@ -1,0 +1,4 @@
+# Runtime dependencies only. The browser is the system Microsoft Edge,
+# so `playwright install` is NOT needed.
+requests>=2.31.0
+playwright>=1.40.0
